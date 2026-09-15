@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { VolumeX } from "lucide-react";
+import { Music, VolumeX } from "lucide-react";
+import weddingAudioUrl from "@/assets/audio/ek-din-aap.mp3";
 
-const AUDIO_SRC = "/Ek%20Din%20Aap%20Yes%20Boss%20128%20Kbps.mp3";
+const FALLBACK_AUDIO_SRC = "/Ek%20Din%20Aap%20Yes%20Boss%20128%20Kbps.mp3";
 const DEFAULT_TARGET_VOLUME = 0.82;
 const FINALE_TARGET_VOLUME = 0.95;
 
@@ -23,37 +24,76 @@ class CinematicAudioController {
   private listeners = new Set<Listener>();
   private fadeInterval: ReturnType<typeof setInterval> | null = null;
   private wasPlayingBeforeHidden = false;
+  private isIOS = false;
 
   constructor() {
     if (typeof window !== "undefined") {
+      this.isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || 
+        (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
       this.initAudio();
       this.bindVisibility();
+      this.bindFirstUserGesture();
     }
   }
 
   private initAudio() {
     if (this.audio) return;
-    this.audio = new Audio(AUDIO_SRC);
-    this.audio.preload = "auto";
-    this.audio.volume = 0;
-    this.audio.loop = false;
+    try {
+      this.audio = new Audio(weddingAudioUrl || FALLBACK_AUDIO_SRC);
+      this.audio.preload = "auto";
+      this.audio.loop = false;
+      
+      // On iOS Safari volume is read-only (always 1.0). On other browsers, set initial default
+      try {
+        this.audio.volume = DEFAULT_TARGET_VOLUME;
+      } catch {
+        // Ignore iOS volume read-only exception
+      }
 
-    this.audio.addEventListener("ended", () => {
-      this.state.isPlaying = false;
-      this.notify();
-    });
-
-    this.audio.addEventListener("pause", () => {
-      if (this.state.isPlaying && !this.wasPlayingBeforeHidden) {
+      this.audio.addEventListener("ended", () => {
         this.state.isPlaying = false;
         this.notify();
-      }
-    });
+      });
 
-    this.audio.addEventListener("play", () => {
-      this.state.isPlaying = true;
-      this.notify();
-    });
+      this.audio.addEventListener("pause", () => {
+        if (this.state.isPlaying && !this.wasPlayingBeforeHidden) {
+          this.state.isPlaying = false;
+          this.notify();
+        }
+      });
+
+      this.audio.addEventListener("play", () => {
+        this.state.isPlaying = true;
+        this.state.hasStarted = true;
+        this.notify();
+      });
+
+      this.audio.addEventListener("error", () => {
+        // Fallback to public audio path if Vite asset fails on any custom environment
+        if (this.audio && this.audio.src !== FALLBACK_AUDIO_SRC) {
+          this.audio.src = FALLBACK_AUDIO_SRC;
+          this.audio.load();
+        }
+      });
+    } catch {
+      // Audio initialization fallback
+    }
+  }
+
+  private bindFirstUserGesture() {
+    const unlockOnFirstGesture = () => {
+      // Only unlock if not explicitly muted or stopped
+      if (!this.state.hasStarted) {
+        this.startJourneyAudio();
+      }
+      window.removeEventListener("pointerdown", unlockOnFirstGesture);
+      window.removeEventListener("touchstart", unlockOnFirstGesture);
+      window.removeEventListener("click", unlockOnFirstGesture);
+    };
+
+    window.addEventListener("pointerdown", unlockOnFirstGesture, { once: true, passive: true });
+    window.addEventListener("touchstart", unlockOnFirstGesture, { once: true, passive: true });
+    window.addEventListener("click", unlockOnFirstGesture, { once: true, passive: true });
   }
 
   private bindVisibility() {
@@ -62,7 +102,7 @@ class CinematicAudioController {
       if (document.hidden) {
         if (this.state.isPlaying) {
           this.wasPlayingBeforeHidden = true;
-          this.fadeVolume(0, 400, () => {
+          this.fadeVolume(0, 300, () => {
             this.audio?.pause();
           });
         }
@@ -70,7 +110,7 @@ class CinematicAudioController {
         if (this.wasPlayingBeforeHidden && !this.state.isMuted) {
           this.wasPlayingBeforeHidden = false;
           this.audio.play().then(() => {
-            this.fadeVolume(DEFAULT_TARGET_VOLUME, 800);
+            this.fadeVolume(DEFAULT_TARGET_VOLUME, 600);
           }).catch(() => {});
         }
       }
@@ -96,35 +136,53 @@ class CinematicAudioController {
       this.fadeInterval = null;
     }
 
-    const startVol = this.audio.volume;
-    const diff = targetVol - startVol;
-    if (Math.abs(diff) < 0.01) {
-      this.audio.volume = Math.max(0, Math.min(1, targetVol));
+    // If iOS Safari, volume is read-only; perform completion immediately
+    if (this.isIOS) {
       if (onComplete) onComplete();
       return;
     }
 
-    const steps = 25;
-    const stepInterval = durationMs / steps;
-    const stepDiff = diff / steps;
-    let currentStep = 0;
-
-    this.fadeInterval = setInterval(() => {
-      if (!this.audio) {
-        if (this.fadeInterval) clearInterval(this.fadeInterval);
-        return;
-      }
-      currentStep++;
-      const nextVol = Math.max(0, Math.min(1, startVol + stepDiff * currentStep));
-      this.audio.volume = nextVol;
-
-      if (currentStep >= steps) {
-        if (this.fadeInterval) clearInterval(this.fadeInterval);
-        this.fadeInterval = null;
+    try {
+      const startVol = this.audio.volume;
+      const diff = targetVol - startVol;
+      if (Math.abs(diff) < 0.02) {
         this.audio.volume = Math.max(0, Math.min(1, targetVol));
         if (onComplete) onComplete();
+        return;
       }
-    }, stepInterval);
+
+      const steps = 20;
+      const stepInterval = durationMs / steps;
+      const stepDiff = diff / steps;
+      let currentStep = 0;
+
+      this.fadeInterval = setInterval(() => {
+        if (!this.audio) {
+          if (this.fadeInterval) clearInterval(this.fadeInterval);
+          return;
+        }
+        currentStep++;
+        try {
+          const nextVol = Math.max(0, Math.min(1, startVol + stepDiff * currentStep));
+          this.audio.volume = nextVol;
+        } catch {
+          // Ignore volume errors
+        }
+
+        if (currentStep >= steps) {
+          if (this.fadeInterval) clearInterval(this.fadeInterval);
+          this.fadeInterval = null;
+          try {
+            this.audio.volume = Math.max(0, Math.min(1, targetVol));
+          } catch {
+            // Ignore
+          }
+          if (onComplete) onComplete();
+        }
+      }, stepInterval);
+    } catch {
+      if (onComplete) onComplete();
+    }
   }
 
   public startJourneyAudio = async () => {
@@ -136,37 +194,46 @@ class CinematicAudioController {
     }
 
     try {
-      this.audio.currentTime = 0;
-      this.audio.volume = 0;
+      this.audio.muted = false;
+      
+      // On non-iOS devices, start at low volume and ramp up
+      if (!this.isIOS) {
+        try {
+          this.audio.volume = 0.05;
+        } catch {
+          // Ignore
+        }
+      }
+
       const playPromise = this.audio.play();
       if (playPromise !== undefined) {
         await playPromise;
       }
+
       this.state.hasStarted = true;
       this.state.isPlaying = true;
       this.state.isMuted = false;
       this.notify();
 
-      // Smooth, elegant fade-in over 1.2s
+      // Smooth fade-in over 1.2s on desktop/Android
       this.fadeVolume(DEFAULT_TARGET_VOLUME, 1200);
     } catch {
-      // Browser autoplay policy prevented playback; will retry on next user tap
+      // Autoplay policy prevented playback; will retry on next user tap
     }
   };
 
   public toggle = () => {
+    if (!this.audio) this.initAudio();
     if (!this.audio) return;
 
-    if (!this.state.hasStarted) {
-      this.startJourneyAudio();
-      return;
-    }
-
-    if (this.state.isMuted || !this.state.isPlaying) {
-      // Unmute & Resume
+    if (!this.state.hasStarted || !this.state.isPlaying) {
+      // Start or Resume
       this.state.isMuted = false;
       this.state.isPlaying = true;
+      this.state.hasStarted = true;
       this.notify();
+
+      this.audio.muted = false;
       this.audio.play().then(() => {
         this.fadeVolume(DEFAULT_TARGET_VOLUME, 600);
       }).catch(() => {});
@@ -175,7 +242,9 @@ class CinematicAudioController {
       this.state.isMuted = true;
       this.state.isPlaying = false;
       this.notify();
-      this.fadeVolume(0, 400, () => {
+
+      this.audio.muted = true;
+      this.fadeVolume(0, 350, () => {
         this.audio?.pause();
       });
     }
@@ -226,41 +295,42 @@ export function useCinematicAudio() {
 
 /**
  * Discreet, luxury floating audio toggle button.
- * Unobtrusive, zero layout shift, fixed in corner with subtle soundwave pulse.
+ * Always present, unobtrusive, zero layout shift, fixed in bottom-right corner.
  */
 export function CinematicAudioToggle() {
   const { isPlaying, isMuted, hasStarted, toggle } = useCinematicAudio();
 
-  // If user hasn't initiated, don't show or show very discreetly
-  const isVisible = hasStarted;
+  const isCurrentlyPlaying = isPlaying && !isMuted;
 
   return (
     <aside
-      className={`cinematic-audio-widget ${isVisible ? "is-visible" : "is-hidden"}`}
-      aria-label="Background music controls"
+      className="cinematic-audio-widget is-visible"
+      aria-label="Wedding background music controls"
     >
       <button
         type="button"
         onClick={toggle}
-        className={`cinematic-audio-pill ${isPlaying && !isMuted ? "is-playing" : "is-paused"}`}
-        aria-label={isPlaying && !isMuted ? "Mute background music" : "Play background music"}
-        title={isPlaying && !isMuted ? "Mute wedding melody" : "Play wedding melody"}
+        className={`cinematic-audio-pill ${isCurrentlyPlaying ? "is-playing" : "is-paused"}`}
+        aria-label={isCurrentlyPlaying ? "Mute wedding music" : "Play wedding music"}
+        title={isCurrentlyPlaying ? "Mute wedding melody" : "Play wedding melody"}
       >
         <span className="audio-pill-ring" aria-hidden="true" />
         <span className="audio-pill-glow" aria-hidden="true" />
         
-        {isPlaying && !isMuted ? (
+        {isCurrentlyPlaying ? (
           <div className="audio-visualizer-bars" aria-hidden="true">
             <span className="sound-bar bar-1" />
             <span className="sound-bar bar-2" />
             <span className="sound-bar bar-3" />
           </div>
-        ) : (
+        ) : hasStarted ? (
           <VolumeX size={14} className="audio-icon-muted" />
+        ) : (
+          <Music size={13} className="audio-icon-muted audio-pulse-icon" />
         )}
 
         <span className="audio-label-text">
-          {isPlaying && !isMuted ? "Music On" : "Music Off"}
+          {isCurrentlyPlaying ? "Music On" : hasStarted ? "Music Off" : "Music"}
         </span>
       </button>
     </aside>
