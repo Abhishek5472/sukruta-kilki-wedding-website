@@ -5,7 +5,11 @@ import { MandalaBackground } from "@/components/motifs/MandalaPattern";
 import { weddingConfig } from "@/lib/wedding-config";
 import { ChevronDown } from "lucide-react";
 
-export function OpeningScene() {
+export function OpeningScene({
+  onBeginJourney,
+}: {
+  onBeginJourney?: () => void;
+}) {
   return (
     <section className="scene opening-scene" aria-labelledby="opening-title">
       {/* Royal Indian Mandala Pattern Background */}
@@ -48,7 +52,19 @@ export function OpeningScene() {
       </div>
 
       {/* Prominent High-Visibility Scroll Indicator with Luxury Micro-Animation */}
-      <div className="scroll-prompt scroll-prompt-enhanced" aria-label="Scroll down to begin the journey">
+      <div
+        className="scroll-prompt scroll-prompt-enhanced"
+        onClick={onBeginJourney}
+        role="button"
+        tabIndex={0}
+        onKeyDown={(e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            onBeginJourney?.();
+          }
+        }}
+        aria-label="Click or scroll down to begin the journey"
+      >
         <div className="scroll-prompt-badge">
           <span className="scroll-prompt-heading">Begin The Journey</span>
           <span className="scroll-prompt-sub">Scroll Down to Enter</span>

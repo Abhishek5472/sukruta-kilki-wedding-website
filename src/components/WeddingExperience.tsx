@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useCallback } from "react";
 import Lenis from "lenis";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -10,11 +10,20 @@ import { GalleryScene } from "@/components/scenes/GalleryScene";
 import { RsvpScene } from "@/components/scenes/RsvpScene";
 import { DetailsScene } from "@/components/scenes/DetailsScene";
 import { FinaleScene } from "@/components/scenes/FinaleScene";
+import { CinematicAudioToggle, cinematicAudio } from "@/components/audio/CinematicAudioPlayer";
 
 gsap.registerPlugin(ScrollTrigger);
 
 export function WeddingExperience() {
   const root = useRef<HTMLElement>(null);
+
+  const handleBeginJourney = useCallback(() => {
+    cinematicAudio.startJourneyAudio();
+    const inviteScene = document.querySelector(".invitation-scene");
+    if (inviteScene) {
+      inviteScene.scrollIntoView({ behavior: "smooth" });
+    }
+  }, []);
 
   useEffect(() => {
     if (!root.current || window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
@@ -29,6 +38,7 @@ export function WeddingExperience() {
 
     const update = (time: number) => lenis.raf(time * 1000);
     lenis.on("scroll", ScrollTrigger.update);
+
     gsap.ticker.add(update);
     gsap.ticker.lagSmoothing(0);
 
@@ -347,6 +357,22 @@ export function WeddingExperience() {
           },
         }
       );
+
+      // Audio Emotional Prominence in Finale Scene
+      ScrollTrigger.create({
+        trigger: ".finale-scene",
+        start: "top 65%",
+        end: "bottom bottom",
+        onEnter: () => cinematicAudio.setProminence(true),
+        onLeaveBack: () => cinematicAudio.setProminence(false),
+      });
+
+      // Graceful audio end fade when reaching the very bottom of the invitation
+      ScrollTrigger.create({
+        trigger: ".finale-scene",
+        start: "bottom 95%",
+        onEnter: () => cinematicAudio.endGracefully(),
+      });
     }, root);
 
     return () => {
@@ -354,11 +380,11 @@ export function WeddingExperience() {
       gsap.ticker.remove(update);
       lenis.destroy();
     };
-  }, []);
+  }, [handleBeginJourney]);
 
   return (
     <main ref={root} className="wedding-experience">
-      <OpeningScene />
+      <OpeningScene onBeginJourney={handleBeginJourney} />
       <InvitationScene />
       <EventsScene />
       <JourneyScene />
@@ -366,6 +392,7 @@ export function WeddingExperience() {
       <RsvpScene />
       <DetailsScene />
       <FinaleScene />
+      <CinematicAudioToggle />
     </main>
   );
 }

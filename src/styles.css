@@ -2871,6 +2871,156 @@ button, a {
   }
 }
 
+/* ==========================================================================
+   CINEMATIC AUDIO CONTROLS (UNOBTRUSIVE, ZERO LAYOUT SHIFT)
+   ========================================================================== */
+
+.cinematic-audio-widget {
+  position: fixed;
+  bottom: 1.6rem;
+  right: 1.6rem;
+  z-index: 100;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(12px) scale(0.95);
+  transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.cinematic-audio-widget.is-visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+}
+
+.cinematic-audio-widget.is-hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.cinematic-audio-pill {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.55rem 0.95rem;
+  background: rgba(14, 41, 40, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(246, 224, 164, 0.55);
+  border-radius: 9999px;
+  color: var(--gold-light);
+  font-family: var(--font-sans-label);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  cursor: pointer;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5), 0 0 16px rgba(212, 175, 55, 0.25);
+  transition: all 0.3s ease;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.cinematic-audio-pill:hover {
+  background: rgba(20, 61, 59, 0.95);
+  border-color: var(--gold-primary);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.6), 0 0 22px rgba(246, 224, 164, 0.45);
+  transform: translateY(-2px);
+}
+
+.cinematic-audio-pill:active {
+  transform: translateY(0) scale(0.97);
+}
+
+.audio-pill-ring {
+  position: absolute;
+  inset: -3px;
+  border-radius: 9999px;
+  border: 1px dashed rgba(246, 224, 164, 0.4);
+  pointer-events: none;
+  animation: audioRingSpin 18s linear infinite;
+}
+
+@keyframes audioRingSpin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.audio-pill-glow {
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  background: radial-gradient(circle at center, rgba(251, 191, 36, 0.2) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+/* Sound wave animated equalizer bars */
+.audio-visualizer-bars {
+  display: flex;
+  align-items: flex-end;
+  gap: 2.5px;
+  height: 12px;
+  width: 12px;
+}
+
+.sound-bar {
+  display: block;
+  width: 2px;
+  background: var(--gold-light);
+  border-radius: 1px;
+}
+
+.sound-bar.bar-1 {
+  height: 40%;
+  animation: soundBarDance1 1s ease-in-out infinite alternate;
+}
+
+.sound-bar.bar-2 {
+  height: 90%;
+  animation: soundBarDance2 0.8s ease-in-out 0.2s infinite alternate;
+}
+
+.sound-bar.bar-3 {
+  height: 60%;
+  animation: soundBarDance3 1.1s ease-in-out 0.4s infinite alternate;
+}
+
+@keyframes soundBarDance1 {
+  0% { height: 25%; }
+  100% { height: 100%; }
+}
+
+@keyframes soundBarDance2 {
+  0% { height: 95%; }
+  100% { height: 35%; }
+}
+
+@keyframes soundBarDance3 {
+  0% { height: 40%; }
+  100% { height: 85%; }
+}
+
+.audio-icon-muted {
+  color: rgba(246, 224, 164, 0.65);
+}
+
+.audio-label-text {
+  line-height: 1;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
+}
+
+@media (max-width: 767px) {
+  .cinematic-audio-widget {
+    bottom: 1.2rem;
+    right: 1.2rem;
+  }
+  .cinematic-audio-pill {
+    padding: 0.48rem 0.82rem;
+    font-size: 0.62rem;
+    gap: 0.45rem;
+  }
+}
+
 /* Reduced Motion Support */
 @media (prefers-reduced-motion: reduce) {
   .lantern,
