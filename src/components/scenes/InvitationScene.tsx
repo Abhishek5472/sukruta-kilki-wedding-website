@@ -155,11 +155,6 @@ export function InvitationScene() {
           <p className="invitation-closing-text">{weddingConfig.invitationClosing}</p>
         </div>
 
-        {/* Natural Transition into the Events */}
-        <div className="invitation-to-events-bridge">
-          <Ornament className="ornament ornament-compact" />
-          <p className="events-bridge-kicker">ON THE FOLLOWING EVENTS</p>
-        </div>
       </div>
     </section>
   );

@@ -1,6 +1,5 @@
 import rajasthanLandscape from "@/assets/rajasthan-landscape.jpg";
 import { Train } from "@/components/motifs/Train";
-import { MandalaBackground } from "@/components/motifs/MandalaPattern";
 import { weddingConfig } from "@/lib/wedding-config";
 
 export function JourneyScene() {
@@ -9,14 +8,6 @@ export function JourneyScene() {
       {/* Seamless Sunset Sky Gradient starting right at the top seam */}
       <div className="journey-sky-gradient" />
       <div className="journey-sun-glow" aria-hidden="true" />
-
-      {/* Subtle warm desert mandala pattern */}
-      <MandalaBackground
-        variant="corner-tr"
-        color="rgba(246, 224, 164, 0.18)"
-        opacity={0.7}
-        className="journey-mandala-overlay"
-      />
 
       {/* 
         Panoramic Vintage Rajasthan Landscape Backdrop

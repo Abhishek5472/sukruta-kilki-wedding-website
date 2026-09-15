@@ -1,4 +1,6 @@
 import React from "react";
+import { MandalaBackground } from "@/components/motifs/MandalaPattern";
+import { DetailsAmbientLanterns } from "@/components/motifs/LanternField";
 import { weddingConfig } from "@/lib/wedding-config";
 import qrWedding from "@/assets/qr-wedding-location.png";
 import qrStay from "@/assets/qr-stay-location.png";
@@ -24,22 +26,35 @@ export function DetailsScene() {
 
   return (
     <section className="scene details-scene" aria-labelledby="details-heading">
+      {/* Royal Indian Mandala Pattern Background */}
+      <MandalaBackground
+        variant="both-corners"
+        color="rgba(246, 224, 164, 0.18)"
+        opacity={0.85}
+        className="details-mandala-overlay"
+      />
+
+      {/* Dynamic 3D ambient lanterns floating sideways, up/down, scaling smaller & bigger */}
+      <DetailsAmbientLanterns />
+
       {/* Subtle Botanical watermark background */}
       <div className="botanical-foliage-left" aria-hidden="true" />
       <div className="botanical-foliage-right" aria-hidden="true" />
 
-      <div className="scene-content details-content reveal-group">
-        <p className="kicker">For When You Need Us</p>
-        <h2 id="details-heading" className="details-main-title">
-          Things to Know
-        </h2>
-        <p className="details-subtitle">
-          Essential information for our family and guests travelling to Jaipur
-        </p>
+      <div className="scene-content details-content">
+        <div className="details-header-block reveal-group">
+          <p className="kicker">For When You Need Us</p>
+          <h2 id="details-heading" className="details-main-title">
+            Things to Know
+          </h2>
+          <p className="details-subtitle">
+            Essential information for our family and guests travelling to Jaipur
+          </p>
+        </div>
 
         <div className="details-cards-grid">
           {weddingConfig.guestGuide.map((item, index) => (
-            <article key={item.id} className="guide-card" data-guide={item.id}>
+            <article key={item.id} className="guide-card reveal-card-flow" data-guide={item.id}>
               <div className="guide-card-header">
                 <span className="guide-card-index">0{index + 1}</span>
                 <span className="guide-card-badge">{item.category}</span>

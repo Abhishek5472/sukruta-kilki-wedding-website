@@ -1,12 +1,20 @@
 import palaceDusk from "@/assets/palace-dusk.jpg";
 import { LanternField } from "@/components/motifs/LanternField";
 import { Ornament } from "@/components/motifs/Ornament";
+import { MandalaBackground } from "@/components/motifs/MandalaPattern";
 import { weddingConfig } from "@/lib/wedding-config";
 import { ChevronDown } from "lucide-react";
 
 export function OpeningScene() {
   return (
     <section className="scene opening-scene" aria-labelledby="opening-title">
+      {/* Royal Indian Mandala Pattern Background */}
+      <MandalaBackground
+        variant="both-corners"
+        color="rgba(246, 224, 164, 0.20)"
+        opacity={0.85}
+        className="opening-mandala-overlay"
+      />
       {/* Background Heritage Palace with dusk illumination */}
       <div className="opening-palace-wrap">
         <img

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import palaceNight from "@/assets/palace-night.jpg";
 import { Ornament } from "@/components/motifs/Ornament";
+import { MandalaBackground } from "@/components/motifs/MandalaPattern";
 import { weddingConfig } from "@/lib/wedding-config";
 
 type Remaining = {
@@ -65,6 +66,14 @@ export function FinaleScene() {
 
   return (
     <section className="scene finale-scene" aria-labelledby="finale-heading">
+      {/* Royal Indian Mandala Pattern Background */}
+      <MandalaBackground
+        variant="both-corners"
+        color="rgba(246, 224, 164, 0.16)"
+        opacity={0.82}
+        className="finale-mandala-overlay"
+      />
+
       {/* Background Illuminated Night Palace */}
       <div className="finale-palace-container">
         <img

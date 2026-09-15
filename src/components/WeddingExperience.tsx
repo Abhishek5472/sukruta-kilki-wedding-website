@@ -110,19 +110,29 @@ export function WeddingExperience() {
         },
       });
 
-      // 3. Invitation Scene elements with elegant staggered reveals (User request 7)
-      gsap.from(".invitation-content .reveal-text-flow", {
-        y: 50,
-        opacity: 0,
-        stagger: 0.18,
-        duration: 1.2,
-        ease: "power2.out",
-        scrollTrigger: {
-          trigger: ".invitation-content",
-          start: "top 75%",
-          end: "bottom 85%",
-          scrub: 1,
-        },
+      // 3. Invitation Scene elements with elegant individual scroll-triggered floating reveals (User request 1)
+      gsap.utils.toArray<HTMLElement>(".invitation-content .reveal-text-flow").forEach((flowEl) => {
+        gsap.fromTo(
+          flowEl,
+          {
+            y: 45,
+            opacity: 0,
+            scale: 0.96,
+          },
+          {
+            y: 0,
+            opacity: 1,
+            scale: 1,
+            duration: 1,
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: flowEl,
+              start: "top 86%",
+              end: "top 62%",
+              scrub: 0.8,
+            },
+          }
+        );
       });
 
       // Courtyard sandstone bottleneck perspective descent (User request 5)
@@ -281,6 +291,44 @@ export function WeddingExperience() {
             scrub: 1,
           },
         });
+      });
+
+      // Things to Know: Individual card reveals as user scrolls (User request 6)
+      gsap.utils.toArray<HTMLElement>(".details-cards-grid .reveal-card-flow").forEach((card) => {
+        gsap.fromTo(
+          card,
+          {
+            y: 50,
+            opacity: 0,
+            scale: 0.94,
+          },
+          {
+            y: 0,
+            opacity: 1,
+            scale: 1,
+            duration: 0.85,
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: card,
+              start: "top 88%",
+              end: "top 64%",
+              scrub: 0.8,
+            },
+          }
+        );
+      });
+
+      // Details ambient lanterns parallax drift
+      gsap.to(".details-ambient-lanterns .lantern", {
+        y: -110,
+        stagger: 0.08,
+        ease: "none",
+        scrollTrigger: {
+          trigger: ".details-scene",
+          start: "top bottom",
+          end: "bottom top",
+          scrub: 1.2,
+        },
       });
 
       // 8. Finale Night Palace camera tilt & illumination

@@ -1,10 +1,18 @@
 import React from "react";
+import { MandalaBackground } from "@/components/motifs/MandalaPattern";
 import { weddingConfig } from "@/lib/wedding-config";
 import { MessageCircle } from "lucide-react";
 
 export function RsvpScene() {
   return (
     <section className="scene rsvp-scene" aria-labelledby="rsvp-heading">
+      {/* Royal Indian Mandala Pattern Background */}
+      <MandalaBackground
+        variant="both-corners"
+        color="rgba(246, 224, 164, 0.22)"
+        opacity={0.88}
+        className="rsvp-mandala-overlay"
+      />
       <div className="rsvp-texture-overlay" aria-hidden="true" />
 
       <div className="scene-content rsvp-content">

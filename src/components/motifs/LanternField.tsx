@@ -95,16 +95,30 @@ export function LanternField({
   );
 }
 
-// Few elegant warm lanterns floating alongside event cards
+// Dynamic 3D ambient lanterns with near/far scaling and multi-directional drift for EventsScene
 export function CardAmbientLanterns() {
   const cardLanterns: LanternData[] = [
-    { id: 101, left: -4, top: 18, scale: 1.4, depth: "fg", delay: 0.4, duration: 7.2, driftX: 16, driftY: -20, direction: "float-right", opacity: 0.95 },
-    { id: 102, left: 32, top: 6, scale: 1.25, depth: "mg", delay: 1.8, duration: 8.0, driftX: -12, driftY: 15, direction: "float-down", opacity: 0.9 },
-    { id: 103, left: 66, top: 12, scale: 1.35, depth: "fg", delay: 0.9, duration: 7.5, driftX: 18, driftY: -18, direction: "float-scale-3d", opacity: 0.92 },
-    { id: 104, left: 98, top: 22, scale: 1.45, depth: "fg", delay: 2.2, duration: 7.0, driftX: -20, driftY: -24, direction: "float-left", opacity: 0.95 },
-    { id: 105, left: 18, top: 78, scale: 1.2, depth: "mg", delay: 1.2, duration: 8.5, driftX: 14, driftY: -20, direction: "float-up", opacity: 0.88 },
-    { id: 106, left: 82, top: 82, scale: 1.28, depth: "mg", delay: 2.9, duration: 8.1, driftX: -15, driftY: 18, direction: "float-down", opacity: 0.89 },
+    { id: 101, left: -3, top: 16, scale: 1.35, depth: "fg", delay: 0.3, duration: 7.2, driftX: 35, driftY: -30, direction: "float-scale-3d", opacity: 0.95 },
+    { id: 102, left: 34, top: 4, scale: 0.95, depth: "mg", delay: 1.5, duration: 8.4, driftX: -28, driftY: 35, direction: "float-scale-3d", opacity: 0.88 },
+    { id: 103, left: 68, top: 10, scale: 1.45, depth: "fg", delay: 0.8, duration: 7.8, driftX: 30, driftY: -25, direction: "float-scale-3d", opacity: 0.94 },
+    { id: 104, left: 96, top: 20, scale: 1.1, depth: "fg", delay: 2.1, duration: 7.5, driftX: -32, driftY: -35, direction: "float-scale-3d", opacity: 0.92 },
+    { id: 105, left: 14, top: 75, scale: 1.05, depth: "mg", delay: 1.1, duration: 8.6, driftX: 25, driftY: -30, direction: "float-scale-3d", opacity: 0.88 },
+    { id: 106, left: 84, top: 80, scale: 1.3, depth: "mg", delay: 2.7, duration: 8.0, driftX: -26, driftY: 28, direction: "float-scale-3d", opacity: 0.9 },
   ];
 
   return <LanternField customLanterns={cardLanterns} className="card-ambient-lanterns" />;
+}
+
+// Dedicated 3D ambient lanterns floating sideways, up/down, scaling smaller & bigger for Things to Know
+export function DetailsAmbientLanterns() {
+  const detailsLanterns: LanternData[] = [
+    { id: 201, left: -2, top: 12, scale: 1.4, depth: "fg", delay: 0.2, duration: 7.0, driftX: 40, driftY: -28, direction: "float-scale-3d", opacity: 0.95 },
+    { id: 202, left: 94, top: 15, scale: 0.9, depth: "mg", delay: 1.6, duration: 8.2, driftX: -36, driftY: 32, direction: "float-scale-3d", opacity: 0.88 },
+    { id: 203, left: 4, top: 48, scale: 1.15, depth: "mg", delay: 2.4, duration: 7.6, driftX: 32, driftY: 24, direction: "float-scale-3d", opacity: 0.9 },
+    { id: 204, left: 92, top: 52, scale: 1.5, depth: "fg", delay: 0.7, duration: 8.0, driftX: -38, driftY: -32, direction: "float-scale-3d", opacity: 0.96 },
+    { id: 205, left: 20, top: 85, scale: 0.85, depth: "bg", delay: 3.1, duration: 9.0, driftX: 28, driftY: -24, direction: "float-scale-3d", opacity: 0.82 },
+    { id: 206, left: 78, top: 88, scale: 1.3, depth: "mg", delay: 1.3, duration: 7.4, driftX: -30, driftY: 26, direction: "float-scale-3d", opacity: 0.92 },
+  ];
+
+  return <LanternField customLanterns={detailsLanterns} className="details-ambient-lanterns" />;
 }

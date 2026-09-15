@@ -30,8 +30,8 @@ export function GalleryScene() {
       {/* Subtle Tone-on-Tone Mandala watermark matching the cameo background */}
       <MandalaBackground
         variant="both-corners"
-        color="rgba(92, 22, 34, 0.08)"
-        opacity={0.8}
+        color="rgba(92, 22, 34, 0.13)"
+        opacity={0.95}
         className="gallery-mandala-overlay"
       />
 
