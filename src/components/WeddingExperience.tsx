@@ -195,50 +195,60 @@ export function WeddingExperience() {
         }
       );
 
-      // Journey Train crossing with Parallax (User request 10 & 11)
+      // Journey Train: Arriving from far-left horizon (small) to right foreground (large)
       gsap.fromTo(
         ".train-image-container",
-        { xPercent: -40 },
+        {
+          xPercent: -95,
+          scale: 0.52,
+          transformOrigin: "left bottom",
+        },
         {
           xPercent: 14,
+          scale: 1.25,
           ease: "none",
           scrollTrigger: {
             trigger: ".journey-scene",
-            start: "top bottom",
-            end: "bottom top",
-            scrub: 0.85,
+            start: "top 75%",
+            end: "bottom 30%",
+            scrub: 0.9,
           },
         }
       );
 
-      // Screen-covering fog billows expanding as the train moves (User request 11)
+      // Parting fog: starts soft, then dissipates quickly as train arrives through it
       gsap.fromTo(
         ".steam-billow",
-        { xPercent: -15, scale: 0.8, opacity: 0.3 },
+        { xPercent: -15, scale: 0.85, opacity: 0.55 },
         {
-          xPercent: 25,
-          scale: 1.3,
-          opacity: 0.85,
-          ease: "none",
+          xPercent: 35,
+          scale: 1.45,
+          opacity: 0,
+          ease: "power2.out",
           scrollTrigger: {
             trigger: ".journey-scene",
-            start: "top 80%",
-            end: "bottom 20%",
-            scrub: 1,
+            start: "top 85%",
+            end: "35% center",
+            scrub: 0.6,
           },
         }
       );
 
-      gsap.to(".track-rolling-fog", {
-        xPercent: -30,
-        ease: "none",
-        scrollTrigger: {
-          trigger: ".journey-scene",
-          start: "top bottom",
-          end: "bottom top",
-          scrub: 1.2,
-        },
-      });
+      gsap.fromTo(
+        ".track-rolling-fog",
+        { opacity: 0.65, xPercent: 0 },
+        {
+          opacity: 0.1,
+          xPercent: -30,
+          ease: "none",
+          scrollTrigger: {
+            trigger: ".journey-scene",
+            start: "top 75%",
+            end: "55% center",
+            scrub: 0.9,
+          },
+        }
+      );
 
       // 6. Scroll-linked RSVP Typography Motion
       gsap.fromTo(

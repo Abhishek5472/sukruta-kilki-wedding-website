@@ -6,16 +6,72 @@ import { weddingConfig } from "@/lib/wedding-config";
 export function InvitationScene() {
   return (
     <section className="scene invitation-scene" aria-labelledby="invitation-heading">
-      {/* Restored Regal Courtyard "Bottleneck" Perspective with Red Sandstone Wings & Reflection */}
+      {/* Restored Regal Courtyard "Bottleneck" Perspective with Symmetric Cusped Gateway & Sandstone Wings */}
       <div className="courtyard-perspective" aria-hidden="true">
+        {/* Symmetric Cusped Palace Gateway Archway Header */}
+        <div className="courtyard-arch-portal">
+          <svg
+            className="courtyard-arch-svg"
+            viewBox="0 0 1000 240"
+            preserveAspectRatio="none"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <defs>
+              <linearGradient id="sandstoneGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="#4a121d" />
+                <stop offset="50%" stopColor="#631b28" />
+                <stop offset="100%" stopColor="#3d0e17" />
+              </linearGradient>
+              <linearGradient id="goldFiligreeArch" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stopColor="#d4af37" stopOpacity="0.4" />
+                <stop offset="25%" stopColor="#f6e0a4" stopOpacity="0.95" />
+                <stop offset="50%" stopColor="#ffd700" stopOpacity="1" />
+                <stop offset="75%" stopColor="#f6e0a4" stopOpacity="0.95" />
+                <stop offset="100%" stopColor="#d4af37" stopOpacity="0.4" />
+              </linearGradient>
+            </defs>
+
+            {/* Sandstone gateway arch shape with cusped multi-foil lobes */}
+            <path
+              d="M0,0 L1000,0 L1000,120 Q860,115 790,145 Q730,175 660,140 Q590,105 500,165 Q410,105 340,140 Q270,175 210,145 Q140,115 0,120 Z"
+              fill="url(#sandstoneGrad)"
+            />
+            {/* Outer gold decorative arch molding */}
+            <path
+              d="M0,120 Q140,115 210,145 Q270,175 340,140 Q410,105 500,165 Q590,105 660,140 Q730,175 790,145 Q860,115 1000,120"
+              stroke="url(#goldFiligreeArch)"
+              strokeWidth="3.5"
+              fill="none"
+            />
+            {/* Inner dashed filigree line */}
+            <path
+              d="M20,110 Q150,105 218,135 Q276,165 344,130 Q414,95 500,152 Q586,95 656,130 Q724,165 782,135 Q850,105 980,110"
+              stroke="#f6e0a4"
+              strokeWidth="1.5"
+              strokeDasharray="4 4"
+              fill="none"
+              opacity="0.85"
+            />
+            {/* Central royal keystone motif */}
+            <circle cx="500" cy="165" r="6" fill="#ffd700" />
+            <circle cx="500" cy="165" r="12" stroke="#d4af37" strokeWidth="1.5" fill="none" opacity="0.6" />
+          </svg>
+        </div>
+
+        {/* Symmetric Sandstone Colonnade Wings (Left & Right) */}
         <div className="courtyard-wing courtyard-wing-left">
+          <div className="courtyard-pillar-fluting" />
           <div className="courtyard-balustrade-gold" />
           <div className="courtyard-wall-shadow" />
         </div>
         <div className="courtyard-wing courtyard-wing-right">
+          <div className="courtyard-pillar-fluting" />
           <div className="courtyard-balustrade-gold" />
           <div className="courtyard-wall-shadow" />
         </div>
+
+        {/* Golden Central Pool Reflection */}
         <div className="courtyard-water-reflection" />
         <div className="courtyard-gateway-line" />
       </div>
