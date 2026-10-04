@@ -113,7 +113,7 @@ export function DetailsScene() {
                   </div>
                 )}
 
-                {/* Click to Call actions for Family Emergency Contacts */}
+                {/* Click to Call actions for Family Contacts */}
                 {item.id === "contacts" && (
                   <div className="contacts-action-grid">
                     <a href="tel:+917756981053" className="contact-tel-btn">

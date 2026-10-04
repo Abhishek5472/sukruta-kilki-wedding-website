@@ -89,7 +89,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       {
         property: "og:description",
         content:
-          "With the heavenly blessings of Smt. Sudha & Sm. Arvind Kulkarni, Mrs. Seema & Mr. Ajit Kulkarni invite you to celebrate the wedding of Sukruta and Kilki in Jaipur.",
+          "Sou. Seema & Shri. Ajit Kulkarni invite you to celebrate the wedding of Sukruta and Kilki in Jaipur.",
       },
       { name: "twitter:card", content: "summary_large_image" },
     ],

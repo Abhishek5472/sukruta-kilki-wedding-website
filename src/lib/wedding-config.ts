@@ -2,6 +2,9 @@ import couple1 from "@/assets/couple-1.jpg";
 import couple2 from "@/assets/couple-2.jpg";
 import couple3 from "@/assets/couple-3.jpg";
 import couple4 from "@/assets/couple-4.jpg";
+import couple5 from "@/assets/couple-5.jpg";
+import couple6 from "@/assets/couple-6.jpg";
+import couple7 from "@/assets/couple-7.jpg";
 
 export type WeddingEvent = {
   id: "sangeet" | "mehendi" | "shaadi";
@@ -26,19 +29,18 @@ export const weddingConfig = {
   countdownTarget: "2026-12-05T19:00:00+05:30",
 
   deities: {
-    shreeGanesh: "ॐ श्री गणेशाय नमः",
+    shreeGanesh: "।। ॐ श्री गणेशाय नमः ।।",
     blessings: [
-      "श्री संगमेश्वर प्रसन्न",
-      "श्री तुळशांगिरी प्रसन्न",
-      "श्री रेणुकादेवी प्रसन्न",
-      "श्री शिवचिदंबर प्रसन्न",
+      "।। श्री संगमेश्वर प्रसन्न ।।",
+      "।। श्री तुळशीगिरी प्रसन्न ।।",
+      "।। श्री रेणुकादेवी प्रसन्न ।।",
+      "।। श्री शिवचिढंबर प्रसन्न ।।",
     ],
   },
 
   family: {
-    heavenlyBlessings: "Smt. Sudha & Sm. Arvind Kulkarni",
-    hosts: "Mrs. Seema & Mr. Ajit Kulkarni",
-    groomParents: "Smt. Jyoti & Shri Ram Kumar Pareek",
+    hosts: "Sou. Seema & Shri. Ajit Kulkarni",
+    groomParents: "Sou. Jyoti & Shri. Ram Kumar Pareek",
     groomOrigin: "Jaipur",
     brideOrigin: "Pune",
     compliments: [
@@ -103,6 +105,9 @@ export const weddingConfig = {
     { src: couple2, caption: "Two paths meeting under starlit skies" },
     { src: couple3, caption: "A bond of heritage, warmth, and grace" },
     { src: couple4, caption: "Stepping into tomorrow, hand in hand" },
+    { src: couple5, caption: "Cherished moments, infinite tomorrows" },
+    { src: couple6, caption: "Laughter, companionship, and boundless love" },
+    { src: couple7, caption: "Beginning a lifetime of joy and togetherness" },
   ],
 
   routeVenue: {
@@ -161,7 +166,7 @@ export const weddingConfig = {
     {
       id: "contacts",
       category: "FAMILY COORDINATORS",
-      title: "Emergency Contacts",
+      title: "Contacts",
       description:
         "Our family coordinators are available at all hours to assist with your journey, local navigation, and comfort in Jaipur. Tap below to call anytime.",
     },

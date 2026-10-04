@@ -113,22 +113,15 @@ export function InvitationScene() {
           </div>
         </div>
 
-        {/* Grandparents' Heavenly Blessings */}
-        <div className="blessings-block reveal-text-flow">
-          <p className="blessings-prefix">With the heavenly blessings of</p>
-          <h3 className="elders-names">Smt. Sudha &amp; Shri Arvind Kulkarni</h3>
-        </div>
-
         <Ornament className="ornament invitation-ornament" />
 
         {/* Parents / Hosts Invitation */}
         <div className="hosts-block reveal-text-flow">
           <h2 id="invitation-heading" className="hosts-names">
-            <span>Mrs. Seema</span>
+            <span>Sou. Seema</span>
             <span className="hosts-ampersand">&amp;</span>
-            <span>Mr. Ajit Kulkarni</span>
+            <span>Shri. Ajit Kulkarni</span>
           </h2>
-          <p className="hosts-residence">Pune, Maharashtra</p>
           <p className="invitation-lead-text">
             {weddingConfig.invitationLead}
           </p>
@@ -140,7 +133,7 @@ export function InvitationScene() {
           <h3 className="couple-bride-name">{weddingConfig.bride}</h3>
           <div className="couple-interlude-connector">
             <span className="connector-line" />
-            <span className="connector-word">with</span>
+            <span className="connector-word">Weds</span>
             <span className="connector-line" />
           </div>
           <span className="couple-prefix-label">Chi.</span>
