@@ -4,6 +4,7 @@ import floralCornerBl from "@/assets/floral-corner-bl.png";
 import { Ornament } from "@/components/motifs/Ornament";
 import { MandalaBackground } from "@/components/motifs/MandalaPattern";
 import { CardAmbientLanterns } from "@/components/motifs/LanternField";
+import { EventEmblem } from "@/components/motifs/EventEmblems";
 import { weddingConfig, type WeddingEvent } from "@/lib/wedding-config";
 import { MapPin, Navigation, Sparkles } from "lucide-react";
 
@@ -80,9 +81,8 @@ function EventCard({
             <span className="event-meta-label">VENUE</span>
             <span className="event-meta-value event-venue-name">{event.venue}</span>
           </div>
-          <div className="event-meta-row event-itinerary-brief">
-            <span className="event-meta-label">PROGRAM</span>
-            <span className="event-meta-desc">{event.itinerary}</span>
+          <div className="event-card-emblem-wrap" aria-hidden="true">
+            <EventEmblem eventId={event.id} className="event-card-emblem" />
           </div>
         </div>
 

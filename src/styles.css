@@ -1255,18 +1255,27 @@ button, a {
   line-height: 1.35;
 }
 
-.event-itinerary-brief {
-  background: rgba(244, 234, 224, 0.65);
-  border-radius: 6px;
-  padding: 0.65rem 0.75rem;
-  border-left: 2px solid var(--gold-primary);
+.event-card-emblem-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 48px;
+  padding: 0.2rem 0 0.1rem;
 }
 
-.event-meta-desc {
-  font-family: var(--font-editorial);
-  font-size: 0.95rem;
-  line-height: 1.45;
-  color: #443322;
+.event-card-emblem {
+  width: clamp(115px, 32vw, 142px);
+  height: auto;
+  color: var(--gold-primary);
+  opacity: 0.95;
+  filter: drop-shadow(0 1px 3px rgba(212, 175, 55, 0.2));
+  transition: transform 0.4s ease, opacity 0.4s ease;
+}
+
+.event-card-plaque:hover .event-card-emblem {
+  opacity: 1;
+  transform: scale(1.03);
 }
 
 .card-route-link {
