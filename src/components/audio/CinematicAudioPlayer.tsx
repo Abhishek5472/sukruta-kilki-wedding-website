@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Music, VolumeX } from "lucide-react";
-import weddingAudioUrl from "@/assets/audio/ek-din-aap.mp3";
+import weddingAudioUrl from "@/assets/audio/Mangal_Rang_From_Ramayana_1.mp3";
 
-const FALLBACK_AUDIO_SRC = "/Ek%20Din%20Aap%20Yes%20Boss%20128%20Kbps.mp3";
+const FALLBACK_AUDIO_SRC = "/Mangal_Rang_From_Ramayana_1.mp3";
 const DEFAULT_TARGET_VOLUME = 0.82;
 const FINALE_TARGET_VOLUME = 0.95;
 
