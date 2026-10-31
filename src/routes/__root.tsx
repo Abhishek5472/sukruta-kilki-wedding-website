@@ -77,21 +77,44 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1, maximum-scale=5" },
-      { title: "Sukruta Weds Kilki | Wedding Celebration in Jaipur" },
+      { title: "Sukruta Weds Kilki — Jaipur Wedding Invitation" },
       {
         name: "description",
         content:
-          "वऱ्हाड निघालं जयपूरला — A luxury family wedding journey from Maharashtra to Jaipur for Sukruta Weds Kilki. 3–5 December 2026.",
+          "A cinematic invitation to celebrate Sukruta and Kilki in Jaipur on 5 December 2026.",
       },
       { name: "author", content: "Sukruta Weds Kilki" },
       { property: "og:type", content: "website" },
-      { property: "og:title", content: "Sukruta Weds Kilki — Wedding Invitation" },
+      { property: "og:title", content: "Sukruta Weds Kilki — Jaipur Wedding Invitation" },
       {
         property: "og:description",
         content:
-          "Sou. Seema & Shri. Ajit Kulkarni invite you to celebrate the wedding of Sukruta and Kilki in Jaipur.",
+          "A cinematic invitation to celebrate Sukruta and Kilki in Jaipur on 5 December 2026.",
       },
+      {
+        property: "og:url",
+        content: "https://sukruta-kilki-wedding-website.kulkarniabhishek24j.workers.dev/",
+      },
+      {
+        property: "og:image",
+        content:
+          "https://sukruta-kilki-wedding-website.kulkarniabhishek24j.workers.dev/wedding-preview.png",
+      },
+      { property: "og:image:width", content: "1200" },
+      { property: "og:image:height", content: "630" },
+      { property: "og:image:type", content: "image/png" },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "Sukruta Weds Kilki — Jaipur Wedding Invitation" },
+      {
+        name: "twitter:description",
+        content:
+          "A cinematic invitation to celebrate Sukruta and Kilki in Jaipur on 5 December 2026.",
+      },
+      {
+        name: "twitter:image",
+        content:
+          "https://sukruta-kilki-wedding-website.kulkarniabhishek24j.workers.dev/wedding-preview.png",
+      },
     ],
     links: [
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
