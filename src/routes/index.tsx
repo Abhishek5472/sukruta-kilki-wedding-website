@@ -25,7 +25,7 @@ export const Route = createFileRoute("/")({
       {
         property: "og:image",
         content:
-          "https://sukruta-kilki-wedding-website.kulkarniabhishek24j.workers.dev/wedding-preview.png",
+          "https://sukruta-kilki-wedding-website.kulkarniabhishek24j.workers.dev/wedding-preview.png?v=2",
       },
       { property: "og:image:width", content: "1200" },
       { property: "og:image:height", content: "630" },
@@ -40,7 +40,7 @@ export const Route = createFileRoute("/")({
       {
         name: "twitter:image",
         content:
-          "https://sukruta-kilki-wedding-website.kulkarniabhishek24j.workers.dev/wedding-preview.png",
+          "https://sukruta-kilki-wedding-website.kulkarniabhishek24j.workers.dev/wedding-preview.png?v=2",
       },
     ],
   }),
